@@ -38,7 +38,7 @@ class Install extends Command
      * @var string
      */
     protected $description = 'start to publish public files before work ... lets start';
-    
+
 
     /**
      * Execute the console command.
@@ -63,21 +63,21 @@ class Install extends Command
             if ( ! $input->getArgument('type')) {
                 $tes=implode(', ',$services);
                 $input->setArgument(
-                    'type', 
+                    'type',
                     $io->choice('Are you sure to install '.$tes,['yes','no'])
                 );
             }
         }else{
             if ( ! $input->getArgument('type')) {
                 $input->setArgument(
-                    'type', 
+                    'type',
                     $io->choice('Are you sure to install Options?',['yes','no'])
                 );
             }
         }
     }
     public function __construct(){
-        $this->sourcePath=config('amer.package_path');
+        $this->sourcePath=config('Amer.Amer.package_path');
         parent::__construct();
     }
     public function handle()
@@ -138,17 +138,18 @@ class Install extends Command
         $this->progressBar->setProgress(4);
         $this->replaceinfile(base_path('/config/app.php'),"'locale'",$replace="'locale'=>'".$language."',");
         $this->replaceinfile(base_path('/config/app.php'),"'fallback_locale'",$replace="'fallback_locale'=>'".$language."',");
-        $this->progressBar->finish(); 
+        $this->progressBar->finish();
     }
     public function config_storage(){}
     public function config_auth(){}
     public function checkservice(){
         $this->services=[
-            'AmerHendy/Amer'=>'Amerhendy\Amer\AmerServiceProvider',
+        'AmerHendy/Amer'=>'Amerhendy\Amer\AmerServiceProvider',
         'AmerHendy/Security'=>'Amerhendy\Security\AmerSecurityServiceProvider',
         'AmerHendy/Employers'=>'Amerhendy\Employers\EmployersServiceProvider',
         'AmerHendy/Setup'=>'Amerhendy\Setup\AmerSetup',
         'AmerHendy/Employment'=>'Amerhendy\Employment\EmploymentServiceProvider',
+        'amerhendy/drivers'=>'Amerhendy\Drivers\DriversServiceProvider',
         ];
         $als=Arr::map($this->services,function($v,$k){
             return $this->get_loaded_providers($v);
@@ -159,5 +160,5 @@ class Install extends Command
         }
         return $return;
     }
-    
+
 }

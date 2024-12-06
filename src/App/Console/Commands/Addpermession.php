@@ -37,7 +37,7 @@ class Addpermession extends Command{
     /////////////////////////////////////////////////////////////
         if(count($this->wanted_services)){
             foreach($this->wanted_services as $a=>$b){
-                
+
                 $this->line('');
                 $this->info('Installing '.$b);
                 $this->progressBar->start();
@@ -61,7 +61,7 @@ class Addpermession extends Command{
         $this->progressBar->start();
         $Class=$this->askclass();
         $this->addclass($Class);
-        
+
     }
     public function checkservice(){
         $return=[];
@@ -90,14 +90,11 @@ class Addpermession extends Command{
             $this->errorBlock("Class Name Have Permission before, Please Select Another Class Name");
             return $this->handle();
         }
-        $newid=Arr::last(Arr::sort(Arr::map($perlid, function ($value, $key) {
-            return $value['id'];
-        })))+1;
         $pers=['add','trash','update','delete','show'];
         $arr=[];
         for($i=0;$i<count($pers);$i++){
             $arr[]=[
-                'id'=>$i+$newid,
+                'id'=>\Str::uuid(),
                 'name'=>$Class.'-'.$pers[$i],
                 'guard_name'=>'Amer',
                 'created_at'=>'now()'
@@ -107,5 +104,5 @@ class Addpermession extends Command{
         $this->line('');
         $this->info('Inserted','Success');
     }
-    
+
 }
